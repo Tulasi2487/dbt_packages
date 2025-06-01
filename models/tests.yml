@@ -28,9 +28,10 @@ models:
           - accepted_values:
              values:
                - "1" 
-               - "2"  
+               - "2"
+               - "3"  
           - dbt_expectations.expect_column_value_lengths_to_equal:
-               value: 1     
+               value: 10    
       - name: email
         tests:
           - validate_email
