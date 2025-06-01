@@ -1,0 +1,38 @@
+models:
+  - name: sales_stg
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+          - duplicate_test
+          - dbt_utils.sequential_values:
+              interval: 1           
+      - name: shipped_status
+        tests: 
+          - accepted_values:
+              values:
+                - "Shipped"
+          - dbt_utils.not_accepted_values:
+              values: ['Pending']      
+    tests:
+      - ship_order_test:
+          column_1: shipped_date
+          column_2: order_date             
+  - name: emp_stg
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+          - accepted_values:
+             values:
+               - "1" 
+               - "2"  
+          - dbt_expectations.expect_column_value_lengths_to_equal:
+               value: 1     
+      - name: email
+        tests:
+          - dbt_expectations.expect_column_values_to_match_like_pattern:
+             like_pattern: "%@%"
+  
