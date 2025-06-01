@@ -33,6 +33,7 @@ models:
                value: 1     
       - name: email
         tests:
+          - validate_email
           - dbt_expectations.expect_column_values_to_match_like_pattern:
              like_pattern: "%@%"
   
